@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./app.css" type="text/css">
+    <title>Code challenge tracking app</title>
+</head>
+<body>
+    <section id="hero">
+    <h1>Challenge Factory</h1>
+    <div class="call-to-action">
+        <a href='#'>Get started</a>
+    </div>
+    </section>
+    <section id='challenge-header'>
+        <h2>Current task name</h2>
+    </section>
+
+    <section id='test-columns'>
+        <div class='row'>
+            <div class='column' data-dragable="target">
+              <div class='c1' >
+                <h3>column one</h3>
+                <ul>
+                    <li data-draggable="item">static task1</li>
+                </ul>
+                <!-- <ul id='challenge-list'></ul> -->
+              </div>
+            </div>
+            <div class='column'>
+                <div class='c2' data-dragable="target">
+                  <h3>column two</h3>
+                  <ul>
+                      <li data-draggable="item">static task2</li>
+                  </ul>
+                </div>
+              </div>
+              <div class='column' >
+                <div class='c3' data-dragable="target">
+                  <h3>column three</h3>
+                  <ul >
+                    <li data-draggable="item">static task3</li>
+                  </ul>
+                </div>
+              </div>
+        </div>
+
+    </section>
+    
+</body>
+<script src='index.js'></script>
+</html>
