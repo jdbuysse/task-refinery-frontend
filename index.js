@@ -46,17 +46,17 @@ function addTasks(card, challenge) {
         addTaskButton(tasks)
         card.appendChild(tasks)
     })
+
 }
 
 function addTaskButton(task){
     let button = document.createElement("button")
-    button.addEventListener("click", deleteTask)
+    button.addEventListener("click", function () {
+        task.removeChild(button);
+        task.remove()
+    })
     button.innerText = 'X'
     task.append(button)
-}
-
-function deleteTask(){
-    alert('delete')
 }
 
 function makeDraggable() {
