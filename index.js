@@ -5,21 +5,70 @@ fetch('http://localhost:3000/challenges')
     .then(result => handleData(result))
     .then(makeDraggable())
 
+// function handleData(data){
+//     console.log(data)
+//     data.forEach(challenge => createChallengeCard(challenge))
+// }
+
 function handleData(data){
-    console.log(data)
-    data.forEach(challenge => createChallengeCard(challenge))
+    return data.forEach(challenge => renderTasks(challenge.tasks))
 }
 
-const challengeCardList = document.querySelector('#challenge-list')
+// const challengeCardList = document.querySelector('#challenge-list')
 const challengeHeader = document.querySelector('#challenge-header')
+const taskList = document.querySelector('#task-list')
+
+//renders an array of task objects
+function renderTasks(tasks) {
+    console.log('tasks',tasks)
+    tasks.forEach(task => {
+        const li = document.createElement('li')
+        li.innerText = task.description
+        li.setAttribute('task-id', '1') //dummy value for now
+        li.setAttribute('data-draggable', 'item')
+        li.setAttribute('draggable', 'true')
+        li.textContent = task.description
+        addTaskButton(li)
+        taskList.append(li)
+    })
+}
+
+function addTaskButton(task){
+    let button = document.createElement("button")
+    button.addEventListener("click", () => {
+        task.removeChild(button);
+        task.remove()
+    })
+    button.innerText = 'X'
+    task.append(button)
+}
+
+
+
+// function renderTasks(tasks){
+//     console.log('t', tasks)
+//     const card = document.createElement('li')
+//     tasks.forEach( task => {
+//         let tasks = document.createElement('li')  
+//         tasks.setAttribute('task-id', '1') //dummy value for now
+//         tasks.setAttribute('data-draggable', 'item')
+//         tasks.setAttribute('draggable', 'true')
+//         tasks.textContent = task.description
+//         addTaskButton(tasks)
+//         card.appendChild(tasks)
+//     })
+// }
+
 
 
 function createChallengeCard(challenge) {
-    // createChallengeHeader(challenge)
+    createChallengeHeader(challenge)
     const card = document.createElement('li')
     addTasks(card, challenge)
     challengeCardList.appendChild(card)
 }
+
+
 
 function createChallengeHeader(challenge) {
     const title = document.createElement('h2')
@@ -49,39 +98,28 @@ function addTasks(card, challenge) {
 
 }
 
-function addTaskButton(task){
-    let button = document.createElement("button")
-    button.addEventListener("click", () => {
-        task.removeChild(button);
-        task.remove()
-    })
-    button.innerText = 'X'
-    task.append(button)
-}
 
 
 //for now I'm going to focus on populating the columns and worry about
 //persisting to a DB later
 function getTaskList(){
     let taskInput = document.querySelector('#task-input')
-    taskArray = formatTaskList(taskInput)
+    taskObject = formatTaskList(taskInput)
+    renderTasks(taskObject)
 }
 
 //turns the list of subtasks into an object
 function formatTaskList(text){
-    const taskObj = {}
     arr = text.value.split('\n')
-    console.log(arr)
-    arr.forEach( task => {
-        taskObj['description'] = task 
-        taskObj['completedness'] = 1
+    return arr.map(task => {
+        let obj = {}
+        obj['description'] = task 
+        obj['completedness'] = 1
+        return obj
     })
-    console.log(taskObj)
 }
 
-function addUserInputToColumns(taskArray){
 
-}
 
 
 //eventually need to update completedness between columns
