@@ -15,9 +15,10 @@
     </section>
     <section id='challenge-header'>
         <h2>Current task name</h2>
-
-        <textarea id="task-input" class="input-box"></textarea>
-        <button onclick="getTaskList()">OK</button>
+        <form id='task-input-form'>
+          <textarea id="task-input" class="input-box" name='tasks'></textarea>
+          <input type='submit'/>
+        </form>
     </section>
 
     <section id='test-columns'>

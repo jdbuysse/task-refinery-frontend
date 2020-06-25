@@ -1,14 +1,8 @@
-
-
 fetch('http://localhost:3000/challenges')
     .then(response => response.json())
     .then(result => handleData(result))
     .then(makeDraggable())
 
-// function handleData(data){
-//     console.log(data)
-//     data.forEach(challenge => createChallengeCard(challenge))
-// }
 
 function handleData(data){
     return data.forEach(challenge => renderTasks(challenge.tasks))
@@ -20,7 +14,6 @@ const taskList = document.querySelector('#task-list')
 
 //renders an array of task objects
 function renderTasks(tasks) {
-    console.log('tasks',tasks)
     tasks.forEach(task => {
         const li = document.createElement('li')
         li.innerText = task.description
@@ -43,32 +36,12 @@ function addTaskButton(task){
     task.append(button)
 }
 
-
-
-// function renderTasks(tasks){
-//     console.log('t', tasks)
-//     const card = document.createElement('li')
-//     tasks.forEach( task => {
-//         let tasks = document.createElement('li')  
-//         tasks.setAttribute('task-id', '1') //dummy value for now
-//         tasks.setAttribute('data-draggable', 'item')
-//         tasks.setAttribute('draggable', 'true')
-//         tasks.textContent = task.description
-//         addTaskButton(tasks)
-//         card.appendChild(tasks)
-//     })
-// }
-
-
-
 function createChallengeCard(challenge) {
     createChallengeHeader(challenge)
     const card = document.createElement('li')
     addTasks(card, challenge)
     challengeCardList.appendChild(card)
 }
-
-
 
 function createChallengeHeader(challenge) {
     const title = document.createElement('h2')
@@ -97,20 +70,22 @@ function addTasks(card, challenge) {
     })
 
 }
-
-
+const taskInput = document.querySelector('#task-input-form')
+taskInput.addEventListener('submit', (event) => captureFormEvent(event))
 
 //for now I'm going to focus on populating the columns and worry about
 //persisting to a DB later
-function getTaskList(){
-    let taskInput = document.querySelector('#task-input')
-    taskObject = formatTaskList(taskInput)
-    renderTasks(taskObject)
+function captureFormEvent(event){
+    console.log(event)
+    event.preventDefault()
+    const formData = new FormData(taskInput)
+    const newTasks = formData.get('tasks')
+    taskObj = formatTaskList(newTasks)
+    renderTasks(taskObj)
 }
-
-//turns the list of subtasks into an object
+//turns the list of subtasks into an array of objects
 function formatTaskList(text){
-    arr = text.value.split('\n')
+    arr = text.split('\n')
     return arr.map(task => {
         let obj = {}
         obj['description'] = task 
@@ -119,12 +94,8 @@ function formatTaskList(text){
     })
 }
 
-
-
-
 //eventually need to update completedness between columns
 function makeDraggable() {
-
     for (let items = document.querySelectorAll('[data-draggable="item"]'),
         len = items.length,
         i = 0; i < len; i++) {
