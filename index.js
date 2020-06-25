@@ -15,7 +15,7 @@ const challengeHeader = document.querySelector('#challenge-header')
 
 
 function createChallengeCard(challenge) {
-    createChallengeHeader(challenge)
+    // createChallengeHeader(challenge)
     const card = document.createElement('li')
     addTasks(card, challenge)
     challengeCardList.appendChild(card)
@@ -51,7 +51,7 @@ function addTasks(card, challenge) {
 
 function addTaskButton(task){
     let button = document.createElement("button")
-    button.addEventListener("click", function () {
+    button.addEventListener("click", () => {
         task.removeChild(button);
         task.remove()
     })
@@ -59,6 +59,32 @@ function addTaskButton(task){
     task.append(button)
 }
 
+
+//for now I'm going to focus on populating the columns and worry about
+//persisting to a DB later
+function getTaskList(){
+    let taskInput = document.querySelector('#task-input')
+    taskArray = formatTaskList(taskInput)
+}
+
+//turns the list of subtasks into an object
+function formatTaskList(text){
+    const taskObj = {}
+    arr = text.value.split('\n')
+    console.log(arr)
+    arr.forEach( task => {
+        taskObj['description'] = task 
+        taskObj['completedness'] = 1
+    })
+    console.log(taskObj)
+}
+
+function addUserInputToColumns(taskArray){
+
+}
+
+
+//eventually need to update completedness between columns
 function makeDraggable() {
 
     for (let items = document.querySelectorAll('[data-draggable="item"]'),
@@ -69,26 +95,26 @@ function makeDraggable() {
 
     let item = null;
 
-    document.addEventListener('dragstart', function (e) {
+    document.addEventListener('dragstart', e => {
         item = e.target;
         e.dataTransfer.setData('text', '');
     }, false);
 
-    document.addEventListener('dragover', function (e) {
+    document.addEventListener('dragover', e => {
         if (item) {
             e.preventDefault();
         }
     }, false);
 
 
-    document.addEventListener('drop', function (e) {
+    document.addEventListener('drop', e => {
         if (e.target.getAttribute('data-draggable') == 'target') {
             e.target.appendChild(item);
             e.preventDefault();
         }
     }, false);
 
-    document.addEventListener('dragend', function (e) {
+    document.addEventListener('dragend', () => {
         item = null;
     }, false);
 }	

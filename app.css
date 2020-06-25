@@ -162,3 +162,9 @@ h3 {
 .c3 {
     background-color: rgba(72, 255, 0, 0.335);
 }
+
+/*fix this to be flexbox later */
+.input-box {
+    width: 1000px;
+    height: 300px;
+}
