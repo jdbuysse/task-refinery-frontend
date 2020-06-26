@@ -15,26 +15,69 @@ const taskList = document.querySelector('#task-list')
 //renders an array of task objects
 function renderTasks(tasks) {
     tasks.forEach(task => {
-        const li = document.createElement('li')
-        li.innerText = task.description
-        li.setAttribute('task-id', '1') //dummy value for now
-        li.setAttribute('data-draggable', 'item')
-        li.setAttribute('draggable', 'true')
-        li.textContent = task.description
-        addTaskButton(li)
-        taskList.append(li)
+        renderTask(task)
     })
 }
 
-function addTaskButton(task){
+//takes single task obj
+function renderTask(task) {
+    const li = document.createElement('li')
+    li.innerText = task.description
+    li.setAttribute('task-id', '1') //dummy value for now
+    li.setAttribute('data-draggable', 'item')
+    li.setAttribute('draggable', 'true')
+    li.textContent = task.description
+    addTaskDeleteButton(li)
+    addTaskEditButton(li)
+    taskList.append(li)
+}
+
+function addTaskDeleteButton(task){
     let button = document.createElement("button")
     button.addEventListener("click", () => {
-        task.removeChild(button);
+        event.preventDefault()
         task.remove()
     })
     button.innerText = 'X'
     task.append(button)
 }
+
+
+function addTaskEditButton(task) {
+    let button = document.createElement("button")
+    button.addEventListener("click", (event, task) => {
+        editTask(event, task);
+    })
+    button.innerText = 'Edit'
+    task.append(button)
+}
+
+function editTask(event) {
+    event.target.parentNode.innerHTML = `
+        <form id='update-task'>
+            <input type='text' value='${event.target.parentNode.innerText.slice(0, -5)}'/>
+        </form> 
+    `
+    const updateTask = document.querySelector('#update-task')
+    updateTask.addEventListener('submit', (e) =>{
+        handleUpdateTask(e)
+    })
+}
+
+function makeTaskObject(value){
+    let obj = {}
+    obj['description'] = value 
+    obj['completedness'] = 1 //dumy var
+    return obj
+}
+
+function handleUpdateTask(event) {
+    event.preventDefault()
+    obj = makeTaskObject(event.target.children[0].value)
+    renderTask(obj)
+    event.target.parentNode.remove()
+}
+
 
 function createChallengeCard(challenge) {
     createChallengeHeader(challenge)
@@ -51,38 +94,31 @@ function createChallengeHeader(challenge) {
     challengeHeader.appendChild(title)
 }
 
-function addChallengeButton(card, challenge) {
-    const button = document.createElement('button')
-    button.setAttribute('data-id', challenge.id)
-    button.textContent = 'Add task'
-    card.appendChild(button)
-}
-
-function addTasks(card, challenge) {
-    challenge.tasks.forEach( task => {
-        let tasks = document.createElement('li')
-        tasks.setAttribute('task-id', task.id)
-        tasks.setAttribute('data-draggable', 'item')
-        tasks.setAttribute('draggable', 'true')
-        tasks.textContent = task.description
-        addTaskButton(tasks)
-        card.appendChild(tasks)
-    })
-
-}
 const taskInput = document.querySelector('#task-input-form')
+
 taskInput.addEventListener('submit', (event) => captureFormEvent(event))
 
-//for now I'm going to focus on populating the columns and worry about
-//persisting to a DB later
+
 function captureFormEvent(event){
-    console.log(event)
+    console.log('submit tasks',event)
     event.preventDefault()
     const formData = new FormData(taskInput)
     const newTasks = formData.get('tasks')
     taskObj = formatTaskList(newTasks)
+    console.log(taskObj)
     renderTasks(taskObj)
 }
+
+function captureUpdateEvent(event){
+    //console.log('update task',event)
+    //console.log('targ', event.target.children[0])
+    event.preventDefault()
+    const formData = new FormData(updateTask)
+    const newTasks = formData.get('update-tasks')
+    taskObj = formatTaskList(newTasks)
+    renderTasks(taskObj)
+}
+
 //turns the list of subtasks into an array of objects
 function formatTaskList(text){
     arr = text.split('\n')
