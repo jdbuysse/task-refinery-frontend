@@ -85,6 +85,12 @@ h3 {
     padding-bottom: 5%;
 }
 
+.login {
+    position: absolute;
+    top: 26px;
+    right: 16px;
+}
+
 .call-to-action {
     display: flex;
     flex-direction: column;

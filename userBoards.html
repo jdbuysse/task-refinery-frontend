@@ -3,28 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./app.css" type="text/css">
-    <title>Code challenge tracking app</title>
+    <link rel="stylesheet" href="./userBoards.css" type="text/css">
+    <title>Document</title>
 </head>
 <body>
-    <section id="hero">
-    <h1>Task Refinery</h1>
-    <div class='login'>
-      <a href='/userBoards.html'>Log in</a>
-    </div>
-    <div class="call-to-action">
-        <a href='#challenge-header'>Quickstart</a>
-    </div>
-    </section>
-    <section id='challenge-header'>
-        <h2>Current task name</h2>
-        <form id='task-input-form'>
-          <textarea id="task-input" class="input-box" name='tasks'></textarea>
-          <input type='submit'/>
-        </form>
-    </section>
+    <header>
+        <div class="menu-toggle" id="hamburger">
+            <i class="fas fa-bars"></i>
+        </div>
+        <div class="overlay"></div>
+        <div class="container">
+            <nav>
+                <h1 class="brand"><a href="index.html">Task Refinery</h1>
+                <ul>
+                    <li><a href="index.html#challenge-header">New Board</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">My Boards</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-    <section id='test-columns'>
+    <div class='column-body'>
         <div class='row'>
             <div class='column' >
               <div class='c1' data-draggable="target">
@@ -37,7 +37,6 @@
                 <div class='c2' data-draggable="target">
                   <h3>column two</h3>
                   <ul>
-                      <li data-draggable="item">static task2</li>
                   </ul>
                 </div>
               </div>
@@ -45,14 +44,13 @@
                 <div class='c3' data-draggable="target">
                   <h3>column three</h3>
                   <ul >
-                    <li data-draggable="item">static task3</li>
+
                   </ul>
                 </div>
               </div>
         </div>
 
-    </section>
-    
+    </div>
 </body>
-<script src='index.js'></script>
+<script src='userBoards.js'></script>
 </html>

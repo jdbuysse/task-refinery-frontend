@@ -1,0 +1,291 @@
+@import url('https://fonts.googleapis.com/css2?family=Spartan&display=swap');
+
+/* overwriting the browser styles */
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+/* My Styling */
+/* https://codepen.io/JLop007/pen/YBeePx */
+
+* {
+    box-sizing:border-box;
+    margin: 0;
+	padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Spartan', sans-serif;
+}
+
+.column-body{
+    background-color: rgba(248, 248, 248, 0.822);
+}
+
+h2 {
+    /* display: none */
+}
+
+h3 {
+    padding-bottom: 5%;
+}
+
+a{
+	text-decoration: none;
+	color: #eee;
+}
+
+header{
+	width: 100%;
+	height: 22vh;
+    background: linear-gradient(to bottom,
+     rgba(0,0,0,.8), rgba(47, 47, 47, 0.5)),
+      url(martin-adams-a_PDPUPuNZ8-unsplash.jpg) center no-repeat;
+	background-size: cover;
+	position: relative;
+    overflow: hidden;
+    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.329), 0 15px 12px rgba(0,0,0,0.22);
+}
+
+.container{
+	max-width: 120rem;
+	width: 90%;
+	margin: 0 auto;
+}
+
+.menu-toggle{
+	position: fixed;
+	top: 2.5rem;
+	right: 2.5rem;
+	color: #eeeeee;
+	font-size: 3rem;
+	cursor: pointer;
+	z-index: 1000;
+	display: none;
+}
+
+nav{
+	padding-top: 5rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 1.6rem;
+}
+
+.brand{
+	font-size: 2rem;
+	font-weight: 300;
+	transform: translateX(-100rem);
+	animation: slideIn .5s forwards;
+}
+
+nav ul{
+	display: flex;
+}
+
+nav ul li{
+	list-style: none;
+	transform: translateX(100rem);
+	animation: slideIn .5s forwards;
+}
+
+nav ul li a{
+	padding: 1rem 0;
+	margin: 0 3rem;
+	position: relative;
+	letter-spacing: 2px;
+}
+
+nav ul li a:last-child{
+	margin-right: 0;
+}
+
+nav ul li a::before,
+nav ul li a::after{
+	content: '';
+	position: absolute;
+	width: 100%;
+	height: 2px;
+	background-color: crimson;
+	left: 0;
+	transform: scaleX(0);
+	transition: all .5s;
+}
+
+nav ul li a::before{
+	top: 0;
+	transform-origin: left;
+}
+
+nav ul li a::after{
+	bottom: 0;
+	transform-origin: right;
+}
+
+.overlay{
+	background-color: rgba(0,0,0,.95);
+	position: fixed;
+	right: 0;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	transition: opacity 650ms;
+	transform: scale(0);
+	opacity: 0;
+    display: none;
+}
+
+nav ul li a:hover::before,
+nav ul li a:hover::after{
+	transform: scaleX(1);
+}
+
+@keyframes slideIn {
+	from{
+
+	}
+	to{
+		transform: translateX(0);
+	}
+}
+
+@media screen and (max-width: 700px){
+
+	.menu-toggle{
+		display: block;
+	}
+
+	nav{
+		padding-top: 0;
+		display: none;
+		flex-direction: column;
+		justify-content: space-evenly;
+		align-items: center;
+		height: 100vh;
+		text-align: center;
+	}
+
+	nav ul{
+		flex-direction: column;
+	}
+
+	nav ul li{
+		margin-top: 5rem;
+	}
+
+	nav ul li a{
+		margin: 0;
+		font-size: 2.5rem;
+	}
+
+	.brand{
+		font-size: 5rem;
+	}
+  
+  .overlay.menu-open,
+  nav.menu-open{
+	  display: flex;
+	  transform: scale(1);
+	  opacity: 1;
+  }
+  
+}
+
+.row {
+    padding-top: 100px;
+    padding-left: 50px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  
+.column {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 1;
+    height: 100vh;
+}
+  
+
+[data-draggable="target"]{
+	float:left;
+	list-style-type:none;
+	width: 85%;
+	height: 7.5em;
+	overflow-y:auto;
+	margin:0 0.5em 0.5em 0;
+	padding:0.5em;
+	border:2px solid #888;
+	border-radius:0.2em;
+	background:#ddd;
+    color:#555;
+    height: 100vh;
+}
+
+[data-draggable="item"]{
+	display:block;
+	list-style-type: none;
+	margin:0 0 2px 0;
+	padding: 0 0;
+	border-radius:0.2em;
+	line-height:1.3;
+}
+
+.c1 {
+    background-color: rgba(133, 33, 8, 0.335);
+}
+
+.c2 {
+    background-color: rgba(212, 223, 58, 0.335);
+}
+.c3 {
+    background-color: rgba(72, 255, 0, 0.335);
+}

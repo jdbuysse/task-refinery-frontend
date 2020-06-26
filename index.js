@@ -8,7 +8,16 @@ function handleData(data){
     return data.forEach(challenge => renderTasks(challenge.tasks))
 }
 
-// const challengeCardList = document.querySelector('#challenge-list')
+const taskStorageArray = []
+
+function populateStorage(tasks) {
+    tasks.forEach(task => {
+        taskStorageArray.push(task)
+    })
+    console.log(taskStorageArray)
+}
+
+
 const challengeHeader = document.querySelector('#challenge-header')
 const taskList = document.querySelector('#task-list')
 
@@ -78,7 +87,6 @@ function handleUpdateTask(event) {
     event.target.parentNode.remove()
 }
 
-
 function createChallengeCard(challenge) {
     createChallengeHeader(challenge)
     const card = document.createElement('li')
@@ -98,20 +106,17 @@ const taskInput = document.querySelector('#task-input-form')
 
 taskInput.addEventListener('submit', (event) => captureFormEvent(event))
 
-
 function captureFormEvent(event){
-    console.log('submit tasks',event)
     event.preventDefault()
     const formData = new FormData(taskInput)
     const newTasks = formData.get('tasks')
     taskObj = formatTaskList(newTasks)
-    console.log(taskObj)
+    console.log('tobj',taskObj)
+    populateStorage(taskObj)
     renderTasks(taskObj)
 }
 
 function captureUpdateEvent(event){
-    //console.log('update task',event)
-    //console.log('targ', event.target.children[0])
     event.preventDefault()
     const formData = new FormData(updateTask)
     const newTasks = formData.get('update-tasks')
@@ -125,7 +130,7 @@ function formatTaskList(text){
     return arr.map(task => {
         let obj = {}
         obj['description'] = task 
-        obj['completedness'] = 1
+        obj['completedness'] = 1 //all tasks start at 1
         return obj
     })
 }
