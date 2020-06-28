@@ -14,9 +14,15 @@ function populateStorage(tasks) {
     tasks.forEach(task => {
         taskStorageArray.push(task)
     })
-    console.log(taskStorageArray)
+    console.log('tsa',taskStorageArray)
+    localStorage.setItem("tasks", JSON.stringify(taskStorageArray))
+    retrieveStorage()
 }
 
+function retrieveStorage(){
+    let tasks = JSON.parse(localStorage.getItem("tasks") || "[]")
+    console.log("retrieved tasks", tasks)
+}
 
 const challengeHeader = document.querySelector('#challenge-header')
 const taskList = document.querySelector('#task-list')
@@ -36,21 +42,30 @@ function renderTask(task) {
     li.setAttribute('data-draggable', 'item')
     li.setAttribute('draggable', 'true')
     li.textContent = task.description
-    addTaskDeleteButton(li)
+    addTaskDeleteButton(li, task)
     addTaskEditButton(li)
     taskList.append(li)
 }
 
-function addTaskDeleteButton(task){
+function addTaskDeleteButton(li,task){
     let button = document.createElement("button")
     button.addEventListener("click", () => {
         event.preventDefault()
-        task.remove()
+        console.log('td', task)
+        //add something to remove task from taskStorageArray
+        li.remove()
     })
     button.innerText = 'X'
-    task.append(button)
+    li.append(button)
 }
 
+//haven't tested yet
+function removeFromTaskStorageArray(task){
+    let removeIndex = taskStorageArray.map( item => {
+        return item.description 
+    }).indexOf(task.description)
+    taskStorageArray.splice(removeIndex, 1)
+}
 
 function addTaskEditButton(task) {
     let button = document.createElement("button")
