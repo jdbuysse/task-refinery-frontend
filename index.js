@@ -20,8 +20,7 @@ function populateStorage(tasks) {
 }
 
 function retrieveStorage(){
-    let tasks = JSON.parse(localStorage.getItem("tasks") || "[]")
-    console.log("retrieved tasks", tasks)
+    return JSON.parse(localStorage.getItem("tasks") || "[]")
 }
 
 const challengeHeader = document.querySelector('#challenge-header')
@@ -52,15 +51,15 @@ function addTaskDeleteButton(li,task){
     button.addEventListener("click", () => {
         event.preventDefault()
         console.log('td', task)
-        //add something to remove task from taskStorageArray
+        removeFromTaskStorageArray(task)
         li.remove()
     })
     button.innerText = 'X'
     li.append(button)
 }
 
-//haven't tested yet
 function removeFromTaskStorageArray(task){
+    console.log('task remove', task)
     let removeIndex = taskStorageArray.map( item => {
         return item.description 
     }).indexOf(task.description)
@@ -126,7 +125,7 @@ function captureFormEvent(event){
     const formData = new FormData(taskInput)
     const newTasks = formData.get('tasks')
     taskObj = formatTaskList(newTasks)
-    console.log('tobj',taskObj)
+    //console.log('tobj',taskObj)
     populateStorage(taskObj)
     renderTasks(taskObj)
 }
