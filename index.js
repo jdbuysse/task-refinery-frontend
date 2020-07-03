@@ -1,10 +1,11 @@
-fetch('http://localhost:3000/challenges')
+fetch('http://127.0.0.1:8001/tasks/')
     .then(response => response.json())
     .then(result => handleData(result))
     .then(makeDraggable())
 
 
 function handleData(data){
+    console.log(data)
     return data.forEach(challenge => renderTasks(challenge.tasks))
 }
 
