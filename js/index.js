@@ -1,3 +1,5 @@
+
+
 fetch('http://127.0.0.1:8001/tasks/')
     .then(response => response.json())
     .then(result => handleData(result))
@@ -8,6 +10,7 @@ function handleData(data){
     console.log(data)
     return data.forEach(challenge => renderTasks(challenge.tasks))
 }
+
 
 const taskStorageArray = []
 
