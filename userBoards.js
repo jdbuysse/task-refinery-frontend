@@ -1,21 +1,28 @@
-const tasksURL = `http://localhost:8001/tasks/`
 
-//for now just grab all the tasks and then prune the object according to user
 
-fetch(tasksURL)
-    .then(response => response.json())
-    .then(result => handleData(result))
-
+let tasksURL = `http://localhost:8001/tasks/`
+const userID = localStorage.getItem("user_id")
 const taskName = document.querySelector('#task-name')
 const subtaskList = document.querySelector('#task-list')
 const taskDropdown = document.querySelector('#task-select')
 taskDropdown.addEventListener('change', selector)
 
+if (userID){
+    console.log('using user tasks', userID)
+    tasksURL = `http://localhost:8001/users/${userID}`
+}
+else{
+    taskName.innerText = "You don't have any tasks yet"
+}
+
+fetch(tasksURL)
+    .then(response => response.json())
+    .then(result => handleData(result))
+
+
+
 function handleData(data){
-    let userTasks = getUserTasks(data)
-    createTaskDropdown(userTasks)
-    //addTaskName(data[0].description)
-    //addSubtasks(data[0].subtasks)
+    createTaskDropdown(data.tasks)
 }
 
 function getUserTasks(tasks){
@@ -25,7 +32,11 @@ function getUserTasks(tasks){
 }
 
 function selector(event){
-    console.log(JSON.parse(event.target.value))
+    clearTasks()
+    task = JSON.parse(event.target.value)
+    localStorage.setItem("selected_task", task.id)
+    addTaskName(task.title)
+    addSubtasks(task.subtasks)
 }
 
 
@@ -39,6 +50,10 @@ function createTaskDropdown(tasks){
     })
 }
 
+function clearTasks(){
+    subtaskList.innerHTML = ``
+}
+
 function addTaskName(name){
     taskName.textContent = name
 }
@@ -47,6 +62,31 @@ function addSubtasks(subtasks){
     subtasks.forEach(sub => {
         renderTask(sub)
     })
+}
+
+function newBoard(){
+    localStorage.setItem("selected_task") = 0
+}
+
+function saveBoard(){
+    let subtasks = Array.from(subtaskList.children).map(item => {
+        return item.innerText
+    })
+    if (localStorage.getItem("selected_task") === 0) {
+        saveNewTask(subtasks)
+    }
+    else {
+        updateExistingTask(subtasks)
+    }
+}
+
+function updateExistingTask(subtasks){
+    task_id = localStorage.getItem("selected_task")
+    console.log("saving an already existing task at", task_id)
+}
+
+function saveNewTask(subtasks){
+    console.log("saving this as new task", subtasks)
 }
 
 function renderTask(task) {
