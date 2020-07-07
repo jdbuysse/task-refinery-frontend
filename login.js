@@ -54,6 +54,7 @@ function sendFetch(username, password){
     .then(result => {
         localStorage.setItem("user_id", parseJwt(result.access).user_id)
         localStorage.setItem("token", result.access)
+        localStorage.setItem("username", username)
         window.location.replace("http://localhost:3000/userBoards.html")
     })
     .catch(error => console.log('error', error));
@@ -74,19 +75,21 @@ function createAccountFetch(username, password){
       redirect: 'follow'
     };
     
-    fetch("http://127.0.0.1:8001/create/", requestOptions)
+    fetch("http://127.0.0.1:8000/create/", requestOptions)
       .then(response => response.json())
       .then(result => accountCreated(result))
 }
 
 function accountCreated(result){
     if (result.id != undefined) {
-        accountCreatedMessage.textContent = 
-        `Welcome, ${result.username}, your account has
+        accountCreatedMessage.textContent = `Welcome, ${result.username}, your account has
         been successfully created`
         localStorage.setItem("user_id", result.id)
     }
-    accountCreatedMessage.textContent = `Account could not be created: ${result.username}`
+    else {
+        accountCreatedMessage.textContent = `Account could not be created: ${result.username}`
+    }
+    
 }
 
 
